@@ -142,43 +142,30 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, args):
         """ Create an object of any class"""
         params = args.split(' ')
-        if (len(params) == 1):
-            if not args:
-                print("** class name missing **")
-                return
-            elif args not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            new_instance = HBNBCommand.classes[args]()
-            storage.save()
-            print(new_instance.id)
-            storage.save()
-        else:
-            if "=" in params[0]:
-                print("** class name missing **")
-                return
-            if params[0] not in HBNBCommand.classes:
-                print("** class doesn't exist **")
-                return
-            keyAndValue = params[1:]
-            kwargs = {}
-            for i in keyAndValue:
-                d = parse_args(i)
-                if d:
-                    key, value = parse_args(i)
-                    if key and value:
-                        kwargs[key] = value
-                else:
-                    pass
-            if len(kwargs.keys()) != 0:
-                kwargs['updated_at'] = datetime.now().isoformat()
-                kwargs['created_at'] = datetime.now().isoformat()
-                kwargs['__class__'] = params[0]
-                kwargs['id'] = str(uuid.uuid4())
-            new_instance = HBNBCommand.classes[params[0]](**kwargs)
-            storage.new(new_instance)
-            storage.save()
-            print(new_instance.id)
+        if "=" in params[0] or params[0] == "":
+            print("** class name missing **")
+            return
+        if params[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+        keyAndValue = params[1:]
+        kwargs = {}
+        for i in keyAndValue:
+            d = parse_args(i)
+            if d:
+                key, value = parse_args(i)
+                if key and value:
+                    kwargs[key] = value
+            else:
+                pass
+        if len(kwargs.keys()) != 0:
+            kwargs['updated_at'] = datetime.now().isoformat()
+            kwargs['created_at'] = datetime.now().isoformat()
+            kwargs['__class__'] = params[0]
+            kwargs['id'] = str(uuid.uuid4())
+        new_instance = HBNBCommand.classes[params[0]](**kwargs)
+        storage.save()
+        print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
