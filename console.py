@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, args):
         """ Create an object of any class"""
         params = args.split(' ')
-        if "=" in params[0] or params[0] is None:
+        if "=" in params[0] or params[0] == "":
             print("** class name missing **")
             return
         if params[0] not in HBNBCommand.classes:
