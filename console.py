@@ -22,7 +22,7 @@ def parse_args(args):
     if value[0] == '"' and value[-1] == '"':
         value = value[1:-1]
         value = value.replace('_', ' ')
-        value = value.replace('"', '\\"')
+        value = value.replace('"', '')
         return (key, value)
     if '.' in value:
         try:
