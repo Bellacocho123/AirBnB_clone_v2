@@ -19,6 +19,8 @@ def parse_args(args):
     if '=' not in args:
         return (None, None)
     key, value = args.split('=')
+    if value == '':
+        return (None, None)
     if value[0] == '"' and value[-1] == '"':
         value = value[1:-1]
         value = value.replace('_', ' ')
