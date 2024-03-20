@@ -10,6 +10,7 @@ from models import state
 from models.base_model import BaseModel
 import pep8
 import unittest
+from os import getenv
 State = state.State
 
 
@@ -71,7 +72,7 @@ class TestState(unittest.TestCase):
         """Test that State has attribute name, and it's as an empty string"""
         state = State()
         self.assertTrue(hasattr(state, "name"))
-        if models.storage_t == 'db':
+        if getenv("HBNB_TYPE_STORAGE") == 'db':
             self.assertEqual(state.name, None)
         else:
             self.assertEqual(state.name, "")

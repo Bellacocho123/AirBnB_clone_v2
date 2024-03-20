@@ -23,10 +23,12 @@ class BaseModel:
     def __init__(self, *args, **kw):
         """Instatntiates a new model"""
         if not kw:
+            now = datetime.now()
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
-            self.updated_at = datetime.now()
+            self.created_at = now
+            self.updated_at = now
         else:
+            now = datetime.now()
             if 'updated_at' in kw:
                 kw['updated_at'] = datetime.strptime(kw['updated_at'], time)
             if 'created_at' in kw:
@@ -36,9 +38,9 @@ class BaseModel:
             if '__class__' in kw:
                 del kw['__class__']
             if 'updated_at' not in kw:
-                self.updated_at = datetime.now()
+                self.updated_at = now
             if 'created_at' not in kw:
-                self.created_at = datetime.now()
+                self.created_at = now
             for key, value in kw.items():
                 setattr(self, key, value)
             self.__dict__.update(kw)

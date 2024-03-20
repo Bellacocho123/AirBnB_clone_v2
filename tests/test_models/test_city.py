@@ -10,6 +10,9 @@ from models import city
 from models.base_model import BaseModel
 import pep8
 import unittest
+from os import getenv
+
+
 City = city.City
 
 
@@ -71,7 +74,7 @@ class TestCity(unittest.TestCase):
         """Test that City has attribute name, and it's an empty string"""
         city = City()
         self.assertTrue(hasattr(city, "name"))
-        if models.storage_t == 'db':
+        if getenv("HBNB_TYPE_STORAGE"):
             self.assertEqual(city.name, None)
         else:
             self.assertEqual(city.name, "")
@@ -80,7 +83,7 @@ class TestCity(unittest.TestCase):
         """Test that City has attribute state_id, and it's an empty string"""
         city = City()
         self.assertTrue(hasattr(city, "state_id"))
-        if models.storage_t == 'db':
+        if getenv("HBNB_TYPE_STORAGE"):
             self.assertEqual(city.state_id, None)
         else:
             self.assertEqual(city.state_id, "")
@@ -92,7 +95,7 @@ class TestCity(unittest.TestCase):
         self.assertEqual(type(new_d), dict)
         self.assertFalse("_sa_instance_state" in new_d)
         for attr in c.__dict__:
-            if attr is not "_sa_instance_state":
+            if attr != "_sa_instance_state":
                 self.assertTrue(attr in new_d)
         self.assertTrue("__class__" in new_d)
 
